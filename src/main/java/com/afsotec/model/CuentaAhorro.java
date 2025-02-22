@@ -1,6 +1,6 @@
 package com.afsotec.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cuentas_ahorro") // Asegúrate de que este nombre coincida con tu tabla en Oracle

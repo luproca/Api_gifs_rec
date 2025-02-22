@@ -1,7 +1,6 @@
 package com.afsotec.dto;
 
-public class CuentaAhorroRequest {
-
+public class ConsultaAhorrosRequest {
     private Integer empresa;
     private String identificacion;
 
