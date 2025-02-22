@@ -1,0 +1,32 @@
+Listado de rutas de carpetas para el volumen Sistema
+El número de serie del volumen es 367E-8A97
+C:.
+¦   .gitignore
+¦   estructura.txt
+¦   pom.xml
+¦   
++---.idea
+¦       .gitignore
+¦       compiler.xml
+¦       encodings.xml
+¦       jarRepositories.xml
+¦       misc.xml
+¦       vcs.xml
+¦       workspace.xml
+¦       
++---src
+    +---main
+    ¦   +---java
+    ¦   ¦   +---com
+    ¦   ¦       +---afsotec
+    ¦   ¦           ¦   Main.java
+    ¦   ¦           ¦   
+    ¦   ¦           +---dto
+    ¦   ¦                   CuentaAhorroResponse.java
+    ¦   ¦                   
+    ¦   +---resources
+    ¦           application.properties
+    ¦           application_ejemplo.properties
+    ¦           
+    +---test
+        +---java
