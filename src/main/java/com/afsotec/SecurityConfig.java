@@ -24,7 +24,9 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/webjars/**",
                                 "/swagger-resources/**",
-                                "/api/consulta-ahorros/**", // Asegúrate de que esta ruta esté pública
+                                "/api/consulta-ahorros/**",
+                                "/api/creditos/**",
+                                "/api/creditos/consultar/**",// Asegúrate de que esta ruta esté pública
                                 "/test" // Agrega esta línea para permitir acceso público al endpoint de prueba
                         ).permitAll()
                         .anyRequest().authenticated() // Opcional: Solo si quieres que otros endpoints requieran autenticación
