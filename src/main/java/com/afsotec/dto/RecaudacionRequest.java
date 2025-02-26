@@ -1,97 +1,54 @@
 package com.afsotec.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RecaudacionRequest {
+
+    @NotNull(message = "El ID de empresa es requerido")
+    @JsonProperty("empresaId")
     private Integer empresaId;
+
+    @NotNull(message = "El ID de cuenta es requerido")
+    @JsonProperty("cuentaId")
     private Integer cuentaId;
+
+    @NotNull(message = "El ID de transacción es requerido")
+    @Pattern(regexp = "ADPV", message = "El ID de transacción debe ser ADPV")
+    @JsonProperty("transaccionId")
     private String transaccionId;
+
+    @NotNull(message = "El ID de concepto es requerido")
+    @JsonProperty("conceptoId")
     private Integer conceptoId;
+
+    @NotNull(message = "El valor es requerido")
+    @Min(value = 1, message = "El valor debe ser mayor que cero")
+    @JsonProperty("valor")
     private BigDecimal valor;
+
+    @Size(max = 255, message = "La observación no puede exceder 255 caracteres")
+    @JsonProperty("observacion")
     private String observacion;
+
+    @Size(max = 50, message = "La referencia no puede exceder 50 caracteres")
+    @JsonProperty("nreferencia")
     private String nreferencia;
+
+    @NotNull(message = "El ID de caja es requerido")
+    @JsonProperty("cajaId")
     private Integer cajaId;
-
-    // Constructor vacío
-    public RecaudacionRequest() {
-    }
-
-    // Constructor con todos los campos
-    public RecaudacionRequest(Integer empresaId, Integer cuentaId, String transaccionId,
-                              Integer conceptoId, BigDecimal valor, String observacion,
-                              String nreferencia, Integer cajaId) {
-        this.empresaId = empresaId;
-        this.cuentaId = cuentaId;
-        this.transaccionId = transaccionId;
-        this.conceptoId = conceptoId;
-        this.valor = valor;
-        this.observacion = observacion;
-        this.nreferencia = nreferencia;
-        this.cajaId = cajaId;
-    }
-
-    // Getters y setters
-    public Integer getEmpresaId() {
-        return empresaId;
-    }
-
-    public void setEmpresaId(Integer empresaId) {
-        this.empresaId = empresaId;
-    }
-
-    public Integer getCuentaId() {
-        return cuentaId;
-    }
-
-    public void setCuentaId(Integer cuentaId) {
-        this.cuentaId = cuentaId;
-    }
-
-    public String getTransaccionId() {
-        return transaccionId;
-    }
-
-    public void setTransaccionId(String transaccionId) {
-        this.transaccionId = transaccionId;
-    }
-
-    public Integer getConceptoId() {
-        return conceptoId;
-    }
-
-    public void setConceptoId(Integer conceptoId) {
-        this.conceptoId = conceptoId;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
-    }
-
-    public String getNreferencia() {
-        return nreferencia;
-    }
-
-    public void setNreferencia(String nreferencia) {
-        this.nreferencia = nreferencia;
-    }
-
-    public Integer getCajaId() {
-        return cajaId;
-    }
-
-    public void setCajaId(Integer cajaId) {
-        this.cajaId = cajaId;
-    }
 }

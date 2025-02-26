@@ -1,61 +1,108 @@
 package com.afsotec.service;
 
+import com.afsotec.dto.DatabaseResponse;
 import com.afsotec.dto.RecaudacionRequest;
 import com.afsotec.dto.RecaudacionResponse;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.ParameterMode;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.StoredProcedureQuery;
-import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Servicio para gestionar operaciones de recaudación.
+ */
 @Service
 public class RecaudacionService {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    private static final Logger logger = LoggerFactory.getLogger(RecaudacionService.class);
 
+    @Autowired
+    private StoredProcedureService storedProcedureService;
+
+    /**
+     * Procesa una solicitud de recaudación llamando al procedimiento almacenado SP_RECAUDACION.
+     *
+     * @param request Datos de la solicitud de recaudación
+     * @return Respuesta con el resultado de la operación
+     */
     @Transactional
     public RecaudacionResponse procesarRecaudacion(RecaudacionRequest request) {
+        logger.info("Procesando recaudación: empresaId={}, cuentaId={}, valor={}, cajaId={}",
+                request.getEmpresaId(), request.getCuentaId(), request.getValor(), request.getCajaId());
+
         try {
-            // Crear una consulta para el procedimiento almacenado
-            StoredProcedureQuery query = entityManager.createStoredProcedureQuery("SP_RECAUDACION");
-
-            // Registrar los parámetros de entrada y salida
-            query.registerStoredProcedureParameter("par_empresa_id", Integer.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("par_cuenta_id", Integer.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("par_transaccion_id", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("par_concepto_id", Integer.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("par_valor", Double.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("par_observacion", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("par_nreferencia", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("par_caja_id", Integer.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("json_param", String.class, ParameterMode.OUT);
-
-            // Asignar los valores a los parámetros de entrada
-            query.setParameter("par_empresa_id", request.getEmpresaId());
-            query.setParameter("par_cuenta_id", request.getCuentaId());
-            query.setParameter("par_transaccion_id", request.getTransaccionId());
-            query.setParameter("par_concepto_id", request.getConceptoId());
-            query.setParameter("par_valor", request.getValor().doubleValue());
-            query.setParameter("par_observacion", request.getObservacion());
-            query.setParameter("par_nreferencia", request.getNreferencia());
-            query.setParameter("par_caja_id", request.getCajaId());
+            // Preparar parámetros para el procedimiento almacenado
+            Map<String, Object> params = new HashMap<>();
+            params.put("par_empresa_id", request.getEmpresaId());
+            params.put("par_cuenta_id", request.getCuentaId());
+            params.put("par_transaccion_id", request.getTransaccionId());
+            params.put("par_concepto_id", request.getConceptoId());
+            params.put("par_valor", request.getValor().doubleValue());
+            params.put("par_observacion", request.getObservacion() != null ? request.getObservacion() : "");
+            params.put("par_nreferencia", request.getNreferencia() != null ? request.getNreferencia() : "");
+            params.put("par_caja_id", request.getCajaId());
 
             // Ejecutar el procedimiento almacenado
-            query.execute();
+            DatabaseResponse dbResponse = storedProcedureService.executeStoredProcedure(
+                    "SP_RECAUDACION", params, "json_param");
 
-            // Obtener el resultado del parámetro de salida
-            String jsonResult = (String) query.getOutputParameterValue("json_param");
+            // Convertir la respuesta de la base de datos a la respuesta de la API
+            RecaudacionResponse response = new RecaudacionResponse();
+            response.setCodigo(dbResponse.getCodigo());
+            response.setMensaje(dbResponse.getMensaje());
 
-            // Devolver la respuesta exitosa
-            return RecaudacionResponse.success(jsonResult);
+            // Registrar el resultado
+            logger.info("Resultado de recaudación: success={}, mensaje={}",
+                    dbResponse.isSuccess(), dbResponse.getMensaje());
+
+            return response;
 
         } catch (Exception e) {
-            // En caso de error, registrar y devolver una respuesta de error
-            System.err.println("Error al procesar la recaudación: " + e.getMessage());
-            e.printStackTrace();
-            return RecaudacionResponse.error("Error al procesar la recaudación: " + e.getMessage());
+            logger.error("Error no controlado al procesar recaudación: {}", e.getMessage(), e);
+
+            RecaudacionResponse errorResponse = new RecaudacionResponse();
+            errorResponse.setCodigo("false");
+            errorResponse.setMensaje("Error interno al procesar la recaudación: " + e.getMessage());
+
+            return errorResponse;
+        }
+    }
+
+    /**
+     * Consulta el estado de una transacción de recaudación.
+     *
+     * @param empresaId ID de la empresa
+     * @param cuentaId ID de la cuenta
+     * @param referencia Referencia de la transacción (opcional)
+     * @return Respuesta con el resultado de la consulta
+     */
+    public RecaudacionResponse consultarTransaccion(Integer empresaId, Integer cuentaId, String referencia) {
+        logger.info("Consultando transacción: empresaId={}, cuentaId={}, referencia={}",
+                empresaId, cuentaId, referencia);
+
+        try {
+            // Aquí podrías implementar una llamada a un procedimiento almacenado
+            // para consultar el estado de la transacción
+
+            // Por ahora, simulamos una respuesta exitosa
+            RecaudacionResponse response = new RecaudacionResponse();
+            response.setCodigo("true");
+            response.setMensaje("Consulta realizada correctamente");
+
+            return response;
+
+        } catch (Exception e) {
+            logger.error("Error al consultar transacción: {}", e.getMessage(), e);
+
+            RecaudacionResponse errorResponse = new RecaudacionResponse();
+            errorResponse.setCodigo("false");
+            errorResponse.setMensaje("Error al consultar la transacción: " + e.getMessage());
+
+            return errorResponse;
         }
     }
 }
