@@ -26,6 +26,7 @@ public class SecurityConfig {
                                 "/swagger-resources/**",
                                 "/api/consulta-ahorros/**",
                                 "/api/cajas/**",
+                                "/api/recaudacion/**",
                                 "/api/creditos/**",
                                 "/api/creditos/consultar/**",// Asegúrate de que esta ruta esté pública
                                 "/test" // Agrega esta línea para permitir acceso público al endpoint de prueba
