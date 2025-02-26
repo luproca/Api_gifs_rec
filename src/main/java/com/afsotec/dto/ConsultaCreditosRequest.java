@@ -1,4 +1,4 @@
-package com.afsotec.request;
+package com.afsotec.dto;
 
 public class ConsultaCreditosRequest {
     private Integer empresaId;

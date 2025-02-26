@@ -1,7 +1,7 @@
 package com.afsotec.controller;
 
-import com.afsotec.request.ConsultaCreditosRequest;
-import com.afsotec.response.ConsultaCreditosResponse;
+import com.afsotec.dto.ConsultaCreditosRequest;
+import com.afsotec.dto.ConsultaCreditosResponse;
 import com.afsotec.service.ConsultaCreditosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,3 +20,4 @@ public class ConsultaCreditosController {
         return consultaCreditosService.consultarCreditos(request.getEmpresaId(), request.getIdentificacion());
     }
 }
+
