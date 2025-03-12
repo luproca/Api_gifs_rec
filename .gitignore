@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Spring Boot ###
+application.properties
+!application_ejemplo.properties
