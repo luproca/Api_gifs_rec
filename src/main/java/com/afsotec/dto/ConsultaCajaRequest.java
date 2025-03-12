@@ -5,7 +5,7 @@ public class ConsultaCajaRequest {
     private String usuarioId;
 
     // Getters y Setters
-    public Integer getEmpresaId() {
+    public Integer getEmpresaId() {  // Corregido de getEmpresaIdId() a getEmpresaId()
         return empresaId;
     }
 

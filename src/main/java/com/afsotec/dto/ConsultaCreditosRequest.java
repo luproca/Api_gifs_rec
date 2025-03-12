@@ -1,16 +1,16 @@
 package com.afsotec.dto;
 
 public class ConsultaCreditosRequest {
-    private Integer empresaId;
+    private Integer empresa;
     private String identificacion;
 
     // Getters y Setters
     public Integer getEmpresaId() {
-        return empresaId;
+        return empresa;
     }
 
-    public void setEmpresaId(Integer empresaId) {
-        this.empresaId = empresaId;
+    public void setEmpresaId(Integer empresa) {
+        this.empresa = empresa;
     }
 
     public String getIdentificacion() {

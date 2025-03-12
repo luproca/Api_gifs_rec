@@ -26,7 +26,7 @@ public class ConsultaAhorrosResponse {
     private String mail;
 
     // Getters y Setters
-    public Integer getEmpresa() { return empresa; }
+    public Integer getEmpresaId() { return empresa; }
     public void setEmpresa(Integer empresa) { this.empresa = empresa; }
 
     public String getNombreCortoEmpresa() { return nombreCortoEmpresa; }

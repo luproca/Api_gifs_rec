@@ -4,6 +4,7 @@ import com.afsotec.dto.DatabaseResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,6 +142,7 @@ public class StoredProcedureService {
 
     /**
      * Parsea el resultado JSON a un objeto DatabaseResponse.
+     * Maneja la adaptación entre diferentes formatos de respuesta JSON.
      */
     private DatabaseResponse parseJsonResponse(String jsonResult) {
         try {
@@ -149,6 +151,27 @@ public class StoredProcedureService {
                 return DatabaseResponse.error("No se recibió respuesta del servidor");
             }
 
+            // Leer el JSON como árbol genérico primero
+            JsonNode jsonNode = objectMapper.readTree(jsonResult);
+            logger.debug("JSON parseado: {}", jsonNode.toString());
+
+            // Verificar si tiene la estructura del SP (estado/message) en lugar de la estructura esperada
+            if (jsonNode.has("estado") && !jsonNode.has("codigo")) {
+                boolean estado = jsonNode.get("estado").asBoolean();
+                String mensaje = jsonNode.has("message") ? jsonNode.get("message").asText() : null;
+                JsonNode datos = jsonNode.has("datos") ? jsonNode.get("datos") : null;
+
+                logger.debug("Procesando estado={}, mensaje={}", estado, mensaje);
+
+                // Usar los métodos factory de DatabaseResponse directamente
+                if (estado) {
+                    return DatabaseResponse.success(mensaje, datos);
+                } else {
+                    return DatabaseResponse.error(mensaje != null ? mensaje : "Error desconocido");
+                }
+            }
+
+            // Si ya tiene el formato esperado, deserializar directamente
             return objectMapper.readValue(jsonResult, DatabaseResponse.class);
         } catch (JsonProcessingException e) {
             logger.error("Error al parsear respuesta JSON: {}", jsonResult, e);

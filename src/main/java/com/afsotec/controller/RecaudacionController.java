@@ -2,6 +2,7 @@ package com.afsotec.controller;
 
 import com.afsotec.dto.RecaudacionRequest;
 import com.afsotec.dto.RecaudacionResponse;
+import com.afsotec.dto.ConsultaTransaccionesRequest;
 import com.afsotec.service.RecaudacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -75,12 +76,10 @@ public class RecaudacionController {
     /**
      * Consulta el estado de una transacción.
      *
-     * @param empresaId ID de la empresa
-     * @param cuentaId ID de la cuenta
-     * @param referencia Referencia de la transacción (opcional)
+     * @param request Datos para la consulta de transacción
      * @return Respuesta con el resultado de la consulta
      */
-    @GetMapping("/consultar")
+    @PostMapping("/consultar")
     @Operation(
             summary = "Consultar estado de transacción",
             description = "Permite consultar el estado de una transacción de recaudación",
@@ -102,14 +101,17 @@ public class RecaudacionController {
                     )
             }
     )
-    public RecaudacionResponse consultarTransaccion(
-            @RequestParam Integer empresaId,
-            @RequestParam Integer cuentaId,
-            @RequestParam(required = false) String referencia) {
+    public RecaudacionResponse consultarTransaccion(@RequestBody ConsultaTransaccionesRequest request) {
 
-        logger.info("Consulta de transacción: empresaId={}, cuentaId={}, referencia={}",
-                empresaId, cuentaId, referencia);
+        Integer cuentaId = null;  // Valor por defecto
+        String referencia = null; // Valor por defecto
 
-        return recaudacionService.consultarTransaccion(empresaId, cuentaId, referencia);
+        logger.info("Consulta de transacción: empresaId={}, usando valores por defecto para cuentaId y referencia",
+                request.getEmpresaId());
+
+        return recaudacionService.consultarTransaccion(
+                request.getEmpresaId(),
+                cuentaId,
+                referencia);
     }
 }

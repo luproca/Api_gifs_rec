@@ -17,13 +17,13 @@ public class ConsultaCreditosService {
     private ConsultaCreditosRepository consultaCreditosRepository;
 
     @Transactional
-    public List<ConsultaCreditosResponse> consultarCreditos(Integer empresaId, String identificacion) {
-        List<Object[]> resultados = consultaCreditosRepository.findCreditosByIdentificacion(empresaId, identificacion);
+    public List<ConsultaCreditosResponse> consultarCreditos(Integer empresa, String identificacion) {
+        List<Object[]> resultados = consultaCreditosRepository.findCreditosByIdentificacion(empresa, identificacion);
         List<ConsultaCreditosResponse> creditos = new ArrayList<>();
 
         for (Object[] resultado : resultados) {
             ConsultaCreditosResponse response = new ConsultaCreditosResponse(
-                    ((Number) resultado[0]).intValue(),  // empresaId
+                    ((Number) resultado[0]).intValue(),  // empresa
                     resultado[1] != null ? resultado[1].toString() : "",  // nombreEmpresa
                     ((Number) resultado[2]).intValue(),  // sucursalId
                     resultado[3] != null ? resultado[3].toString() : "",  // nombreSucursal

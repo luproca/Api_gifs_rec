@@ -1,16 +1,16 @@
 package com.afsotec.dto;
 
 public class ConsultaAhorrosRequest {
-    private Integer empresa;
+    private Integer empresaId; // Cambiado de "empresa" a "empresaId"
     private String identificacion;
 
     // Getters y Setters
-    public Integer getEmpresa() {
-        return empresa;
+    public Integer getEmpresaId() {
+        return empresaId;
     }
 
-    public void setEmpresa(Integer empresa) {
-        this.empresa = empresa;
+    public void setEmpresaId(Integer empresaId) {
+        this.empresaId = empresaId;
     }
 
     public String getIdentificacion() {

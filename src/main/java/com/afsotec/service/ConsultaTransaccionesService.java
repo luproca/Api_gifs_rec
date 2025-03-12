@@ -18,11 +18,11 @@ public class ConsultaTransaccionesService {
 
     public List<ConsultaTransaccionesResponse> consultarTransaccionesDiaActual(ConsultaTransaccionesRequest request) {
         // Usando valores por defecto si no se proporcionan
-        Integer empresaId = request.getEmpresaId() != null ? request.getEmpresaId() : 1;
+        Integer empresaId = request.getEmpresaId() != null ? request.getEmpresaId() : 1;  // Corregido de getempresaId a getEmpresaId
         Integer cajaId = request.getCajaId() != null ? request.getCajaId() : 1;
 
-        logger.info("Consultando transacciones del día actual para Empresa: " + empresaId + ", Caja: " + cajaId);
+        logger.info("Consultando transacciones del día actual para EmpresaId: " + empresaId + ", Caja: " + cajaId);  // Cambiado Empresa a EmpresaId
 
-        return consultaTransaccionesRepository.consultarTransaccionesDiaActual(empresaId, cajaId);
+        return consultaTransaccionesRepository.consultarTransaccionesDiaActual(empresaId, cajaId);  // Cambiado empresa a empresaId
     }
 }

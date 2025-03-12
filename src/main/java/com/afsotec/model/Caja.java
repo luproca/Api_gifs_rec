@@ -12,7 +12,7 @@ public class Caja {
     private Long id;
 
     @Column(name = "EMPRESA_ID")
-    private Integer empresaId;
+    private Integer empresa;
 
     @Column(name = "SUCURSAL_ID")
     private Integer sucursalId;
@@ -38,12 +38,12 @@ public class Caja {
         this.id = id;
     }
 
-    public Integer getEmpresaId() {
-        return empresaId;
+    public Integer getEmpresaid() {
+        return empresa;
     }
 
-    public void setEmpresaId(Integer empresaId) {
-        this.empresaId = empresaId;
+    public void setempresa(Integer empresa) {
+        this.empresa = empresa;
     }
 
     public Integer getSucursalId() {

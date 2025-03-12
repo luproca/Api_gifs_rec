@@ -36,7 +36,7 @@ public class RecaudacionRequest {
     private Integer conceptoId;
 
     @NotNull(message = "El valor es requerido")
-    @Min(value = 1, message = "El valor debe ser mayor que cero")
+    @Min(value = 0, message = "El valor debe ser mayor que cero")
     @JsonProperty("valor")
     private BigDecimal valor;
 

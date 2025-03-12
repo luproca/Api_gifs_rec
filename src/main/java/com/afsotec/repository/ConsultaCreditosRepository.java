@@ -13,9 +13,9 @@ import java.util.List;
 @Repository
 public interface ConsultaCreditosRepository extends JpaRepository<Creditos, Long> {
 
-    @Query(value = "SELECT * FROM SALDO_RECAUDACION_FETCH WHERE EMPRESA_ID = :empresaId AND IDENTIFICACION = :identificacion", nativeQuery = true)
+    @Query(value = "SELECT * FROM SALDO_RECAUDACION_FETCH WHERE EMPRESA_ID = :empresa AND IDENTIFICACION = :identificacion", nativeQuery = true)
     List<Object[]> findCreditosByIdentificacion(
-            @Param("empresaId") Integer empresaId,
+            @Param("empresa") Integer empresa,
             @Param("identificacion") String identificacion
     );
 }

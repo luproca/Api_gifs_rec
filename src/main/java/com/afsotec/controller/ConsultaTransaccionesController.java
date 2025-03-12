@@ -24,60 +24,8 @@ public class ConsultaTransaccionesController {
     public ResponseEntity<List<ConsultaTransaccionesResponse>> consultarTransacciones(
             @RequestBody(required = false) ConsultaTransaccionesRequest request) {
 
-        // Si no se proporciona un request, crear uno con valores por defecto
-        if (request == null) {
-            request = ConsultaTransaccionesRequest.builder()
-                    .empresaId(1)
-                    .cajaId(1)
-                    .build();
-        }
 
-        logger.info("Recibida solicitud POST para consultar transacciones: " + request);
-
-        List<ConsultaTransaccionesResponse> transacciones = consultaTransaccionesService.consultarTransaccionesDiaActual(request);
-
-        logger.info("Se encontraron " + transacciones.size() + " transacciones");
-
-        if (transacciones.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(transacciones, HttpStatus.OK);
-    }
-
-    @GetMapping("/consultar")
-    public ResponseEntity<List<ConsultaTransaccionesResponse>> consultarTransaccionesDefault() {
-        // Consulta con valores por defecto (Empresa 1, Caja 1)
-        ConsultaTransaccionesRequest request = ConsultaTransaccionesRequest.builder()
-                .empresaId(1)
-                .cajaId(1)
-                .build();
-
-        logger.info("Recibida solicitud GET para consultar transacciones con valores por defecto");
-
-        List<ConsultaTransaccionesResponse> transacciones = consultaTransaccionesService.consultarTransaccionesDiaActual(request);
-
-        logger.info("Se encontraron " + transacciones.size() + " transacciones");
-
-        if (transacciones.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(transacciones, HttpStatus.OK);
-    }
-
-    @GetMapping("/consultar/{empresaId}/{cajaId}")
-    public ResponseEntity<List<ConsultaTransaccionesResponse>> consultarTransaccionesPorCaja(
-            @PathVariable Integer empresaId,
-            @PathVariable Integer cajaId) {
-
-        logger.info("Recibida solicitud GET para consultar transacciones - Empresa: " +
-                empresaId + ", Caja: " + cajaId);
-
-        ConsultaTransaccionesRequest request = ConsultaTransaccionesRequest.builder()
-                .empresaId(empresaId)
-                .cajaId(cajaId)
-                .build();
+        logger.info("Recibida solicitud para consultar transacciones: " + request);
 
         List<ConsultaTransaccionesResponse> transacciones = consultaTransaccionesService.consultarTransaccionesDiaActual(request);
 

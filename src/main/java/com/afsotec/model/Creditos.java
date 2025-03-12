@@ -12,7 +12,7 @@ public class Creditos {
     private Long id;
 
     @Column(name = "empresa_id")
-    private Integer empresaId;
+    private Integer empresa;
 
     @Column(name = "nombre_empresa")
     private String nombreEmpresa;
@@ -82,11 +82,11 @@ public class Creditos {
 
     // Getters y Setters
     public Integer getEmpresaId() {
-        return empresaId;
+        return empresa;
     }
 
-    public void setEmpresaId(Integer empresaId) {
-        this.empresaId = empresaId;
+    public void setempresa(Integer empresa) {
+        this.empresa = empresa;
     }
 
     public String getNombreEmpresa() {

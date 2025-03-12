@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.afsotec</groupId>
     <artifactId>Api_gifs_rec</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Api_gifs_rec</name>
     <description>Demo project for Spring Boot</description>
     <parent>

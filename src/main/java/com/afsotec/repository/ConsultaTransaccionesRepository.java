@@ -44,7 +44,7 @@ public class ConsultaTransaccionesRepository {
                 "FROM MOVIMIENTO_CAJA_FETCH " +
                 "WHERE EMPRESA_ID = ? AND CAJA_ID = ? AND TRUNC(FECHA) = TRUNC(SYSDATE)";
 
-        logger.info("Ejecutando consulta para empresa " + empresaId + " y caja " + cajaId + " con fecha actual (SYSDATE)");
+        logger.info("Ejecutando consulta para empresaid " + empresaId + " y caja " + cajaId + " con fecha actual (SYSDATE)");
 
         return jdbcTemplate.query(
                 sql,

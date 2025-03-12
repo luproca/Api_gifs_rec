@@ -7,21 +7,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Clase para mapear respuestas JSON de procedimientos almacenados.
- * Formato esperado: {"codigo":"true|false", "mensaje":"texto", "datos":{...}}
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DatabaseResponse {
 
-    @JsonProperty("codigo")
-    private String codigo;
+    @JsonProperty("estado")  // Cambiado de "codigo" a "estado"
+    private Boolean estado;  // Cambiado de String a Boolean
 
-    @JsonProperty("mensaje")
-    private String mensaje;
+    @JsonProperty("message") // Cambiado de "mensaje" a "message"
+    private String mensaje;  // El nombre del campo se mantiene igual para compatibilidad
 
     @JsonProperty("datos")
     private JsonNode datos;
@@ -30,7 +26,14 @@ public class DatabaseResponse {
      * Verifica si la respuesta indica éxito.
      */
     public boolean isSuccess() {
-        return "true".equals(codigo);
+        return estado != null && estado; // Cambio para evaluar el boolean directamente
+    }
+
+    /**
+     * Obtiene el código como string para compatibilidad con la interfaz existente
+     */
+    public String getCodigo() {
+        return estado != null && estado ? "true" : "false";
     }
 
     /**
@@ -38,7 +41,7 @@ public class DatabaseResponse {
      */
     public static DatabaseResponse error(String errorMessage) {
         DatabaseResponse response = new DatabaseResponse();
-        response.setCodigo("false");
+        response.setEstado(false);
         response.setMensaje(errorMessage);
         return response;
     }
@@ -48,7 +51,7 @@ public class DatabaseResponse {
      */
     public static DatabaseResponse success(String message, JsonNode data) {
         DatabaseResponse response = new DatabaseResponse();
-        response.setCodigo("true");
+        response.setEstado(true);
         response.setMensaje(message);
         response.setDatos(data);
         return response;

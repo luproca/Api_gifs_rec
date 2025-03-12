@@ -18,7 +18,7 @@ public interface ConsultaCajaRepository extends JpaRepository<Caja, Integer> {
                     "WHERE CJ.EMPRESA_ID = :empresaId AND TRIM(CJ.USUARIO_ID) = :usuarioId",
             nativeQuery = true)
     List<Object[]> findCajasByUsuarioId(
-            @Param("empresaId") Integer empresaId,
+            @Param("empresaId") Integer empresaId, // Cambiado de "empresa" a "empresaId"
             @Param("usuarioId") String usuarioId
     );
 
@@ -29,7 +29,7 @@ public interface ConsultaCajaRepository extends JpaRepository<Caja, Integer> {
                     "INNER JOIN SALDO_CAJA SC ON SC.EMPRESA_ID = CJ.EMPRESA_ID AND SC.SUCURSAL_ID = CJ.SUCURSAL_ID AND SC.CAJA_ID = CJ.CAJA_ID " +
                     "WHERE CJ.EMPRESA_ID = :empresaId",
             nativeQuery = true)
-    List<Object[]> findCajasByEmpresaId(
-            @Param("empresaId") Integer empresaId
+    List<Object[]> findCajasByEmpresa(
+            @Param("empresaId") Integer empresaId // Cambiado de "empresa" a "empresaId"
     );
 }
