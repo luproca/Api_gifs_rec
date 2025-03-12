@@ -51,6 +51,7 @@ public class SecurityConfig {
                                 "/api/cajas/**",
                                 "/api/recaudacion/**",
                                 "/api/creditos/**",
+                                "/api/transacciones/**",
                                 "/api/creditos/consultar/**", // Ensure this route is public
                                 "/test" // Add this line to allow public access to the test endpoint
                         ).permitAll()
