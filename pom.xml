@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.afsotec</groupId>
-    <artifactId>Api_gifs_rec</artifactId>
+    <artifactId>api_gifs_rec</artifactId>
     <version>1.0.0</version>
-    <name>Api_gifs_rec</name>
+    <name>api_gifs_rec</name>
     <description>Demo project for Spring Boot</description>
     <parent>
         <groupId>org.springframework.boot</groupId>
