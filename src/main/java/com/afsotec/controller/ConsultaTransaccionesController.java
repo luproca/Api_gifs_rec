@@ -31,9 +31,6 @@ public class ConsultaTransaccionesController {
 
         logger.info("Se encontraron " + transacciones.size() + " transacciones");
 
-        if (transacciones.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
 
         return new ResponseEntity<>(transacciones, HttpStatus.OK);
     }
